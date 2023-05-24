@@ -1,43 +1,69 @@
-import './App.css';
-import React from 'react';
-import Index from './components/Index';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addExercise, deleteExercise } from './actions/exerciseActions';
 
+const App = () => {
+  const exercises = useSelector(state => state.exercises);
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [duration, setDuration] = useState('');
 
-function App() {
+  const handleAddExercise = () => {
+    const exercise = {
+      name,
+      duration: parseInt(duration),
+    };
+    dispatch(addExercise(exercise));
+    setName('');
+    setDuration('');
+  };
+
+  const handleDeleteExercise = (index) => {
+    dispatch(deleteExercise(index));
+  };
+
   return (
-    <div className="bg-[#F2F2F2] h-screen  dark:bg-slate-800">
-        <div className='h-full w-10/12 m-auto'>
-            <header className='flex-col align-middle justify-center'>
-                <h1
-                    className='text-center text-5xl pt-10 mb-3 font-serif text-black  dark:text-white'>Work out - List</h1>
-                <h3 className='text-[15px] font-bold text-center mb-5 dark:text-slate-400'>오늘은 어떤 운동을 할까요?</h3>
-            </header>
-            <div className="inline-flex items-center justify-center w-full">
-                <hr className="w-2/4 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700"/>
-                <div className="absolute px-4 -translate-x-1/2 left-1/2 bg-[#F2F2F2] dark:bg-slate-800">
-                    <svg
-                        aria-hidden="true"
-                        className="w-5 h-5 text-gray-700 dark:text-gray-300"
-                        viewBox="0 0 24 27"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"><path
-                        d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
-                        fill="currentColor"/></svg>
-                </div>
-            </div>
-            <nav className=' h-14 flex flex-row justify-center align-middle'>
-                <button className='mx-3 dark:text-slate-400  hover:text-[#f75c35] duration-500'>홈</button>
-                <button className='mx-3 dark:text-slate-400  hover:text-[#f75c35] duration-500'>운동일지</button>
-            </nav>
-
-            <main className='h-fit flex justify-center  overflow-y-auto'><Index></Index> </main>
-        </div>
-        <footer className='h-20 bg-gray-200 border-t border-t-gray-300 dark:bg-slate-600 dark:border-t dark:border-t-gray-700'>
-            <h2 className='text-3xl text-center dark:text-slate-400'>Made By Woong<div className='text-lg mt-2'>osw7890@gmail.com</div>
-            </h2>
-        </footer>
+    <div className="container mx-auto mt-5">
+      <h1 className="text-3xl font-bold mb-5">Workout Diary</h1>
+      <div className="flex mb-5">
+        <input
+          className="border border-gray-300 rounded-md py-2 px-3 mr-2"
+          placeholder="Exercise"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          className="border border-gray-300 rounded-md py-2 px-3 mr-2"
+          placeholder="Duration (mins)"
+          type="number"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+        />
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleAddExercise}
+          data-testid="add-exercise-button"
+        >
+          Add Exercise
+        </button>
+      </div>
+      <ul>
+        {exercises.map((exercise, index) => (
+          <li key={index} className="mb-2" data-testid="exercise-item">
+            <span>{exercise.name} - {exercise.duration} mins</span>
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              onClick={() => handleDeleteExercise(index)}
+              data-testid={`delete-exercise-button-${index}`}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
-);
-}
+  );
+};
 
 export default App;

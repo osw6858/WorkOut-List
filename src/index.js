@@ -5,13 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import counterReducer from './reducer/counterreducer';
+import exerciseReducer from './reducers/exerciseReducer';
+
+const store = createStore(exerciseReducer);
 //import dotenv from 'dotenv';
 //dotenv.config();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = createStore(counterReducer);
-
 root.render(
   <Provider store={store}>
     <App />
