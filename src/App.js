@@ -1,5 +1,7 @@
 import './App.css';
 import React from 'react';
+import Index from './components/Index';
+
 
 function App() {
   return (
@@ -28,7 +30,7 @@ function App() {
                 <button className='mx-3 dark:text-slate-400  hover:text-[#f75c35] duration-500'>운동일지</button>
             </nav>
 
-            <main className='h-3/5 border border-gray-300 dark:border-gray-700 overflow-y-auto'>contents</main>
+            <main className='h-fit flex justify-center  overflow-y-auto'><Index></Index> </main>
         </div>
         <footer className='h-20 bg-gray-200 border-t border-t-gray-300 dark:bg-slate-600 dark:border-t dark:border-t-gray-700'>
             <h2 className='text-3xl text-center dark:text-slate-400'>Made By Woong<div className='text-lg mt-2'>osw7890@gmail.com</div>

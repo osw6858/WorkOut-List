@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import counterReducer from './reducer/counterreducer';
+//import dotenv from 'dotenv';
+//dotenv.config();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = createStore(counterReducer);
