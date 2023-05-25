@@ -10,6 +10,7 @@ const App = () => {
         setNewExercise(e.target.value);
     };
 
+    /**운동을 추가하는 함수.  */
     const handleAddExercise = () => {
         if (newExercise.trim() !== '') {
             setExercises([
@@ -24,26 +25,30 @@ const App = () => {
                 }
             ]);
             setNewExercise('');
+        }else{
+            alert('운동을 입력해 주세요.')
         }
     };
 
+    /**세트를 추가하는 함수. exercises배열 index를 매개변수로 받음  */
     const handleAddSet = (exerciseIndex) => {
         const weightInput = weightInputs.current[exerciseIndex];
         const repsInput = repsInputs.current[exerciseIndex];
 
         if (weightInput.value !== '' && repsInput.value !== '') {
             const updatedExercises = [...exercises];
-            updatedExercises[exerciseIndex]
-                .sets
-                .push({weight: weightInput.value, repetitions: repsInput.value});
+
+            updatedExercises[exerciseIndex].sets.push({weight: weightInput.value, repetitions: repsInput.value});
             setExercises(updatedExercises);
+
             weightInput.value = '';
             repsInput.value = '';
         } else {
-            alert('무게와 횟수를 입력해주세요.');
+            alert('올바른 무게와 횟수를 입력해주세요.');
         }
     };
 
+    /**세트를 제거하는 함수. 제거할 운동(exercises) index와 세트(sets) index를 매개변수로 받음   */
     const handleRemoveSet = (exerciseIndex, setIndex) => {
         const updatedExercises = [...exercises];
         updatedExercises[exerciseIndex]
@@ -56,7 +61,7 @@ const App = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-slate-200">
             <header className="bg-gray-800 text-white py-4 px-8">
                 <h1 className="text-3xl font-bold">Workout Log</h1>
                 <nav className="flex justify-center">
@@ -110,25 +115,25 @@ const App = () => {
                                 exercise
                                     .sets
                                     .map((set, setIndex) => (
-                                        <div className="grid grid-cols-4 gap-4 mb-4" key={setIndex}>
+                                        <div className="grid grid-cols-4 gap-4 mb-2 md:mb-4" key={setIndex}>
                                             {
                                                 set.weight !== '' && (
-                                                    <div className="bg-gray-300 rounded-lg px-8 py-4 text-center">
-                                                        {`${setIndex}세트`}
+                                                    <div className="bg-gray-300 rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1">
+                                                        {`${setIndex} Set`}
                                                     </div>
                                                 )
                                             }
                                             {
                                                 set.weight !== '' && (
-                                                    <div className="bg-gray-300 rounded-lg px-8 py-4 text-center">
+                                                    <div className="bg-gray-300 rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1">
                                                         {`${set.weight}kg`}
                                                     </div>
                                                 )
                                             }
                                             {
                                                 set.repetitions !== '' && (
-                                                    <div className="bg-gray-300 rounded-lg px-8 py-4 text-center">
-                                                        {`${set.repetitions}회`}
+                                                    <div className="bg-gray-300 rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1">
+                                                        {`${set.repetitions} Reps`}
                                                     </div>
                                                 )
                                             }
@@ -136,13 +141,13 @@ const App = () => {
                                             {
                                                 set.repetitions !== '' && (
                                                     <button
-                                                        className="bg-red-500 text-white rounded-lg px-8 py-4"
+                                                        className="bg-red-500 text-white rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1"
                                                         onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
                                                         Remove
                                                     </button>
                                                 )
                                             }
-
+                                            <hr class="w-fit mx-auto my-4"/>
                                         </div>
                                     ))
                             }
