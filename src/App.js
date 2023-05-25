@@ -2,29 +2,51 @@ import React, {useState} from 'react';
 
 const App = () => {
     const [exercises, setExercises] = useState([]);
+    const [newExercise, setNewExercise] = useState('');
+
+    const handleInputChange = (e) => {
+        setNewExercise(e.target.value);
+    };
 
     const handleAddExercise = () => {
-        setExercises([
-            ...exercises, {
-                name: '',
-                sets: ['']
-            }
-        ]);
+        if (newExercise.trim() !== '') {
+            setExercises([
+                ...exercises, {
+                    name: newExercise,
+                    sets: [
+                        {
+                            weight: '',
+                            repetitions: ''
+                        }
+                    ]
+                }
+            ]);
+            setNewExercise('');
+        }
     };
 
     const handleAddSet = (exerciseIndex) => {
         const updatedExercises = [...exercises];
-        const inputElement = document.getElementById(`input-set-${exerciseIndex}`);
-        const inputValue = parseInt(inputElement.value);
+        const weightValue = document
+            .getElementById(`input-weight-${exerciseIndex}`)
+            .value;
+        const repsValue = document
+            .getElementById(`input-reps-${exerciseIndex}`)
+            .value;
 
-        if (inputValue >= 1 && inputValue <= 100) {
+        if (weightValue !== '' && repsValue !== '') {
             updatedExercises[exerciseIndex]
                 .sets
-                .push('');
+                .push({weight: weightValue, repetitions: repsValue});
             setExercises(updatedExercises);
+            document
+                .getElementById(`input-weight-${exerciseIndex}`)
+                .value = '';
+            document
+                .getElementById(`input-reps-${exerciseIndex}`)
+                .value = '';
         } else {
-            // 횟수 입력 범위를 벗어난 경우 처리 로직 추가
-            alert('횟수는 1에서 100 사이의 값을 입력해주세요.');
+            alert('무게와 횟수를 입력해주세요.');
         }
     };
 
@@ -33,20 +55,19 @@ const App = () => {
         updatedExercises[exerciseIndex]
             .sets
             .splice(setIndex, 1);
+        if (updatedExercises[exerciseIndex].sets.length === 1) {
+            updatedExercises.splice(exerciseIndex, 1);
+        }
         setExercises(updatedExercises);
     };
 
     return (
         <div className="flex flex-col min-h-screen">
             <header className="bg-gray-800 text-white py-4 px-8">
-                <h1 className="text-3xl font-bold">work out - log</h1>
+                <h1 className="text-3xl font-bold">Workout Log</h1>
                 <nav className="flex justify-center">
-                    <span className="text-gray-400 hover:text-white px-4">
-                        홈
-                    </span>
-                    <span className="text-gray-400 hover:text-white px-4">
-                        운동기록
-                    </span>
+                    <span className="text-gray-400 hover:text-white px-4">Home</span>
+                    <span className="text-gray-400 hover:text-white px-4">Exercise Log</span>
                 </nav>
             </header>
 
@@ -55,22 +76,39 @@ const App = () => {
                     <input
                         type="text"
                         className="rounded-lg border-gray-300 border p-4 focus:outline-none"
-                        placeholder="운동 이름"/>
+                        placeholder="Exercise Name"
+                        value={newExercise}
+                        onChange={handleInputChange}/>
                     <button
                         className="bg-blue-500 text-white rounded-lg px-8 py-4"
                         onClick={handleAddExercise}>
-                        추가하기
+                        Add Exercise
                     </button>
                 </div>
 
                 {
                     exercises.map((exercise, exerciseIndex) => (
                         <div className="mb-8" key={exerciseIndex}>
-                            <div className="grid grid-cols-2 gap-4 mb-4">
+                            <h2 className="text-xl font-bold mb-4">{exercise.name}</h2>
+                            <div className="grid grid-cols-3 gap-4 mb-4">
+                                <input
+                                    type="number"
+                                    id={`input-weight-${exerciseIndex}`}
+                                    className="rounded-lg border-gray-300 border p-4 focus:outline-none"
+                                    placeholder="Weight"
+                                    min={0}
+                                    max={1000}/>
+                                <input
+                                    type="number"
+                                    id={`input-reps-${exerciseIndex}`}
+                                    className="rounded-lg border-gray-300 border p-4 focus:outline-none"
+                                    placeholder="Repetitions"
+                                    min={0}
+                                    max={100}/>
                                 <button
-                                    className="bg-blue-500 text-white rounded-lg px-8 py-4 w-fit"
+                                    className="bg-blue-500 text-white rounded-lg px-8 py-4"
                                     onClick={() => handleAddSet(exerciseIndex)}>
-                                    세트 추가
+                                    Add Set
                                 </button>
                             </div>
 
@@ -78,21 +116,39 @@ const App = () => {
                                 exercise
                                     .sets
                                     .map((set, setIndex) => (
-                                        <div className="grid grid-cols-3 gap-4 mb-4" key={setIndex}>
-                                            <input
-                                                type="number"
-                                                id={`input-set-${exerciseIndex}`}
-                                                className="rounded-lg border-gray-300 border p-4 focus:outline-none"
-                                                placeholder="횟수 입력란"
-                                                min={0}
-                                                max={100}
-                                                />
-                                            <div className="bg-green-500 text-white rounded-lg px-8 py-4 text-center">{setIndex + 1}세트</div>
-                                            <button
-                                                className="bg-red-500 text-white rounded-lg px-8 py-4"
-                                                onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
-                                                삭제
-                                            </button>
+                                        <div className="grid grid-cols-4 gap-4 mb-4" key={setIndex}>
+                                            {
+                                                set.weight !== '' && (
+                                                    <div className="bg-gray-300 rounded-lg px-8 py-4 text-center">
+                                                        {`${setIndex}세트`}
+                                                    </div>
+                                                )
+                                            }
+                                            {
+                                                set.weight !== '' && (
+                                                    <div className="bg-gray-300 rounded-lg px-8 py-4 text-center">
+                                                        {`${set.weight}kg`}
+                                                    </div>
+                                                )
+                                            }
+                                            {
+                                                set.repetitions !== '' && (
+                                                    <div className="bg-gray-300 rounded-lg px-8 py-4 text-center">
+                                                        {`${set.repetitions}회`}
+                                                    </div>
+                                                )
+                                            }
+
+                                            {
+                                                set.repetitions !== '' && (
+                                                    <button
+                                                        className="bg-red-500 text-white rounded-lg px-8 py-4"
+                                                        onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
+                                                        Remove
+                                                    </button>
+                                                )
+                                            }
+
                                         </div>
                                     ))
                             }
@@ -100,12 +156,12 @@ const App = () => {
                     ))
                 }
 
-                <button className="bg-blue-500 text-white rounded-lg px-8 py-4">완료</button>
+                <button className="bg-blue-500 text-white rounded-lg px-8 py-4">Complete</button>
             </main>
 
             <footer className="bg-gray-800 text-white py-4 px-8">
                 <div className="flex justify-center">
-                    <span>mad-by woong</span>
+                    <span>Made by Woong</span>
                 </div>
             </footer>
         </div>
