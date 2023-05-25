@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 
 const App = () => {
     const [exercises, setExercises] = useState([]);
     const [newExercise, setNewExercise] = useState('');
+    const weightInputs = useRef([]);
+    const repsInputs = useRef([]);
 
     const handleInputChange = (e) => {
         setNewExercise(e.target.value);
@@ -26,25 +28,17 @@ const App = () => {
     };
 
     const handleAddSet = (exerciseIndex) => {
-        const updatedExercises = [...exercises];
-        const weightValue = document
-            .getElementById(`input-weight-${exerciseIndex}`)
-            .value;
-        const repsValue = document
-            .getElementById(`input-reps-${exerciseIndex}`)
-            .value;
+        const weightInput = weightInputs.current[exerciseIndex];
+        const repsInput = repsInputs.current[exerciseIndex];
 
-        if (weightValue !== '' && repsValue !== '') {
+        if (weightInput.value !== '' && repsInput.value !== '') {
+            const updatedExercises = [...exercises];
             updatedExercises[exerciseIndex]
                 .sets
-                .push({weight: weightValue, repetitions: repsValue});
+                .push({weight: weightInput.value, repetitions: repsInput.value});
             setExercises(updatedExercises);
-            document
-                .getElementById(`input-weight-${exerciseIndex}`)
-                .value = '';
-            document
-                .getElementById(`input-reps-${exerciseIndex}`)
-                .value = '';
+            weightInput.value = '';
+            repsInput.value = '';
         } else {
             alert('무게와 횟수를 입력해주세요.');
         }
@@ -93,18 +87,18 @@ const App = () => {
                             <div className="grid grid-cols-3 gap-4 mb-4">
                                 <input
                                     type="number"
-                                    id={`input-weight-${exerciseIndex}`}
                                     className="rounded-lg border-gray-300 border p-4 focus:outline-none"
                                     placeholder="Weight"
                                     min={0}
-                                    max={1000}/>
+                                    max={1000}
+                                    ref={(el) => weightInputs.current[exerciseIndex] = el}/>
                                 <input
                                     type="number"
-                                    id={`input-reps-${exerciseIndex}`}
                                     className="rounded-lg border-gray-300 border p-4 focus:outline-none"
                                     placeholder="Repetitions"
                                     min={0}
-                                    max={100}/>
+                                    max={100}
+                                    ref={(el) => repsInputs.current[exerciseIndex] = el}/>
                                 <button
                                     className="bg-blue-500 text-white rounded-lg px-8 py-4"
                                     onClick={() => handleAddSet(exerciseIndex)}>
