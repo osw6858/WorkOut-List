@@ -1,11 +1,13 @@
 import React, {useState, useRef} from 'react';
 import {Carousel} from 'antd';
+import {Collapse} from 'antd';
 
 const App = () => {
     const [exercises, setExercises] = useState([]);
     const [newExercise, setNewExercise] = useState('');
     const weightInputs = useRef([]);
     const repsInputs = useRef([]);
+    const {Panel} = Collapse;
 
     const handleInputChange = (e) => {
         setNewExercise(e.target.value);
@@ -108,7 +110,7 @@ const App = () => {
             </div>
 
             <main className="flex-grow container mx-auto p-8">
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="grid grid-cols-2 gap-4 mb-8 font-bold">
                     <input
                         type="text"
                         className="rounded-lg border-gray-300 border p-4 focus:outline-none"
@@ -124,9 +126,10 @@ const App = () => {
 
                 {
                     exercises.map((exercise, exerciseIndex) => (
-                        <div className="mb-8" key={exerciseIndex}>
-                            <h2 className="text-xl font-bold mb-4">{exercise.name}</h2>
-                            <div className="grid grid-cols-3 gap-4 mb-4">
+                        
+                            <Collapse defaultActiveKey={['1']}  key={exerciseIndex}>
+                                <Panel className='text-xl font-bold mb-4' header={exercise.name} key="1">
+                                <div className="grid grid-cols-3 gap-4 mb-4 text-sm">
                                 <input
                                     type="number"
                                     className="rounded-lg border-gray-300 border p-4 focus:outline-none"
@@ -152,7 +155,7 @@ const App = () => {
                                 exercise
                                     .sets
                                     .map((set, setIndex) => (
-                                        <div className="grid grid-cols-4 gap-4 mb-2 md:mb-4" key={setIndex}>
+                                        <div className="grid grid-cols-4 gap-4 mb-2 md:mb-4 text-sm" key={setIndex}>
                                             {
                                                 set.weight !== '' && (
                                                     <div
@@ -192,13 +195,17 @@ const App = () => {
 
                                     ))
                             }
-
-                        </div>
+                                </Panel>
+                            
+                            
+                         
+</Collapse>
+                        
                     ))
                 }
 
                 <button
-                    className="bg-blue-500 text-white rounded-lg px-8 py-4  hover:bg-sky-500">Complete</button>
+                    className="bg-blue-500 text-white rounded-lg px-8 py-4 font-bold  hover:bg-sky-500">Complete</button>
             </main>
 
             <footer className="bg-gray-800 text-white py-4 px-8">
