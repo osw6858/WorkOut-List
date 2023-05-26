@@ -17,7 +17,7 @@ const App = () => {
     const handleAddExercise = () => {
         if (newExercise.trim() !== '') {
             setExercises([
-                ...exercises, {
+                 {
                     name: newExercise,
                     sets: [
                         {
@@ -25,7 +25,8 @@ const App = () => {
                             repetitions: ''
                         }
                     ]
-                }
+                },
+                ...exercises
             ]);
             setNewExercise('');
         } else {
