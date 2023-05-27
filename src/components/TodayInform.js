@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import {WEATHER_API_URL, WEATHER_API_KEY} from "../Secret"
 
 const TodayInform = () => {
+  //console.log(process.env.REACT_APP_WEATHER_API_KEY) 
+  const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY
+  const WEATHER_API_URL = process.env.REACT_APP_WEATHER_API_URL
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
