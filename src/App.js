@@ -11,7 +11,6 @@ const App = () => {
     const weightInputs = useRef([]);
     const repsInputs = useRef([]);
     
-
     /**운동을 추가하는 함수.  */
     const handleAddExercise = () => {
         if (newExercise.trim() !== '') {

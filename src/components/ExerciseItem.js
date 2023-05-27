@@ -11,6 +11,13 @@ const ExerciseItem = ({
     handleRemoveSet,
     handleRemoveExercise
   }) => {
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleAddSet(exerciseIndex);
+        }
+      };
+
     return (
       <Collapse defaultActiveKey={['1']}>
         <Panel className="text-xl font-bold mb-4" header={exercise.name} key="1">
@@ -22,6 +29,7 @@ const ExerciseItem = ({
               placeholder="무게"
               min={0}
               max={1000}
+              onKeyDown ={handleKeyPress}
               ref={(el) => (weightInputs.current[exerciseIndex] = el)}
             />
             <input
@@ -30,6 +38,7 @@ const ExerciseItem = ({
               placeholder="반복 횟수"
               min={0}
               max={100}
+              onKeyDown ={handleKeyPress}
               ref={(el) => (repsInputs.current[exerciseIndex] = el)}
             />
             <button
