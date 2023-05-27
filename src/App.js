@@ -4,6 +4,7 @@ import Header from './components/Header';
 import CarouselComponent from './components/CarouselComponent';
 import ExerciseItem from './components/ExerciseItem';
 import  Footer  from './components/Footer' 
+import TodayInform from './components/TodayInform';
 
 const App = () => {
     const [exercises, setExercises] = useState([]);
@@ -28,7 +29,7 @@ const App = () => {
             ]);
             setNewExercise('');
         } else {
-            alert('운동을 입력해 주세요.')
+            alert('Please enter your workout.')
         }
     };
 
@@ -38,7 +39,7 @@ const App = () => {
         const repsInput = repsInputs.current[exerciseIndex];
 
         if (parseInt(weightInput.value) > 800 || parseInt(repsInput.value) > 300) {
-            alert('잘못 입력한게 아닌지 확인해 주세요!');
+            alert('Please check if you entered it incorrectly!');
         }
 
         if (weightInput.value !== '' && repsInput.value !== '') {
@@ -51,7 +52,7 @@ const App = () => {
             weightInput.value = '';
             repsInput.value = '';
         } else {
-            alert('올바른 무게와 횟수를 입력해주세요.');
+            alert('Please enter the correct weight and reps.');
         }
     };
 
@@ -72,10 +73,10 @@ const App = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-200">
+        <div className="flex flex-col min-h-screen bg-slate-200 ">
             <Header/>
-            <CarouselComponent/>
-            <main className="flex-grow container mx-auto p-8">
+            <TodayInform/>
+            <main className="flex-grow container mx-auto px-8 py-5 ">
               <AddExercise
               setNewExercise={setNewExercise}
               newExercise= {newExercise}
@@ -100,6 +101,7 @@ const App = () => {
                 <button
                     className="bg-blue-500 text-white rounded-lg px-8 py-4 font-bold  hover:bg-sky-500">Complete</button>
             </main>
+            <CarouselComponent/>
            <Footer/>
         </div>
     );

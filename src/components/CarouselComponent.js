@@ -1,7 +1,7 @@
 import {Carousel} from 'antd';
 
 const CarouselComponent = () => {
-    return (  <div className='w-4/6 p-8 mx-auto hidden sm:block'>
+    return (  <div className='w-11/12 p-8 mx-auto hidden sm:block'>
     <Carousel >
         {/* PC 화면에서는 보임 */}
         <div>
