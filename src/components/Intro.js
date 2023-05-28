@@ -8,7 +8,7 @@ const Intro = () => {
       <div className="flex flex-wrap justify-center ">
         <div className="max-w-xs mx-3 rounded-lg shadow-xl p-8 mb-8  bg-slate-200 text-slate-600">
           <h2 className="text-lg font-bold mb-4">1. 타이머</h2>
-          <p className='text-sm'>운동 시간을 측정할때 사용하세요.</p>
+          <p className='text-sm'>운동 시간을 측정하고 얼마나 했는지 기록해 보세요.</p>
         </div>
 
         <div className="max-w-xs mx-3  rounded-lg shadow-xl p-8 mb-8 bg-slate-200 text-slate-600">
