@@ -4,7 +4,7 @@ const SetItem = ({ set, exerciseIndex, setIndex, handleRemoveSet }) => {
         {
             set.weight !== '' && (
                 <div
-                    className="bg-gray-300 rounded-lg px-2 md:px-8 py-2 md:py-4 text-center font-sans col-span-2 md:col-span-1">
+                    className="bg-gray-400 rounded-lg px-2 md:px-8 py-2 md:py-4 text-center font-sans col-span-2 md:col-span-1">
                     {`${setIndex} 세트`}
                 </div>
             )
@@ -31,7 +31,7 @@ const SetItem = ({ set, exerciseIndex, setIndex, handleRemoveSet }) => {
                 <button
                     className="bg-red-500 hover:bg-red-400 text-white rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1"
                     onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
-                    세트 삭제
+                    세트 삭제 
                 </button>
             )
         }

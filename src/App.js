@@ -3,20 +3,23 @@ import AddExercise from './components/AddExercise';
 import Header from './components/Header';
 import CarouselComponent from './components/CarouselComponent';
 import ExerciseItem from './components/ExerciseItem';
-import  Footer  from './components/Footer' 
+import Footer from './components/Footer'
 import TodayInform from './components/TodayInform';
+import Intro from './components/Intro';
+import {Collapse} from 'antd';
+const {Panel} = Collapse;
 
 const App = () => {
     const [exercises, setExercises] = useState([]);
     const [newExercise, setNewExercise] = useState('');
     const weightInputs = useRef([]);
     const repsInputs = useRef([]);
-    
+
     /**운동을 추가하는 함수.  */
     const handleAddExercise = () => {
         if (newExercise.trim() !== '') {
             setExercises([
-                 {
+                {
                     name: newExercise,
                     sets: [
                         {
@@ -60,7 +63,7 @@ const App = () => {
     const handleRemoveExercise = (exerciseIndex) => {
         const updatedExercises = [...exercises];
         updatedExercises.splice(exerciseIndex, 1);
-            setExercises(updatedExercises);
+        setExercises(updatedExercises);
     }
 
     /**세트를 제거하는 함수. 제거할 운동(exercises)배열 index와 세트(sets) index를 매개변수로 받음   */
@@ -75,26 +78,28 @@ const App = () => {
     return (
         <div className="flex flex-col min-h-screen bg-slate-200 ">
             <Header/>
+            <Collapse className='text-lg font-bold ' defaultActiveKey={['1']}>
+                <Panel  header="이용방법" key="2">
+                <Intro></Intro>
+                </Panel>
+            </Collapse>
             <TodayInform/>
-            <main className="flex-grow container mx-auto px-8 py-5 ">
-              <AddExercise
-              setNewExercise={setNewExercise}
-              newExercise= {newExercise}
-              handleAddExercise={handleAddExercise}
-              />
 
-                {
+            <main className="flex-grow container mx-auto px-8 py-5 ">
+                <AddExercise
+                    setNewExercise={setNewExercise}
+                    newExercise={newExercise}
+                    handleAddExercise={handleAddExercise}/> {
                     exercises.map((exercise, exerciseIndex) => (
                         <ExerciseItem
-                        key={exerciseIndex}
-                        exercise={exercise}
-                        exerciseIndex={exerciseIndex}
-                        weightInputs={weightInputs}
-                        repsInputs={repsInputs}
-                        handleAddSet={handleAddSet}
-                        handleRemoveSet={handleRemoveSet}
-                        handleRemoveExercise={handleRemoveExercise}
-                      />
+                            key={exerciseIndex}
+                            exercise={exercise}
+                            exerciseIndex={exerciseIndex}
+                            weightInputs={weightInputs}
+                            repsInputs={repsInputs}
+                            handleAddSet={handleAddSet}
+                            handleRemoveSet={handleRemoveSet}
+                            handleRemoveExercise={handleRemoveExercise}/>
                     ))
                 }
 
@@ -102,7 +107,7 @@ const App = () => {
                     className="bg-blue-500 text-white rounded-lg px-8 py-4 font-bold  hover:bg-sky-500">기록 저장</button>
             </main>
             <CarouselComponent/>
-           <Footer/>
+            <Footer/>
         </div>
     );
 };
