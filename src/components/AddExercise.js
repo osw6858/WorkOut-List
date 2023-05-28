@@ -15,7 +15,7 @@ const AddExercise = ({setNewExercise,newExercise,handleAddExercise}) => {
     <input
         type="text"
         className="rounded-lg border-gray-300 border p-4 focus:outline-none"
-        placeholder="Exercise Name"
+        placeholder="운동종목"
         value={newExercise}
         onChange={handleInputChange}
         onKeyDown ={handleKeyPress}
@@ -25,8 +25,7 @@ const AddExercise = ({setNewExercise,newExercise,handleAddExercise}) => {
         className="bg-blue-500 text-white rounded-lg px-8 py-4 hover:bg-sky-500"
         onClick={handleAddExercise}
         >
-            
-        Add Exercise
+        추가
     </button>
 </div>)
 }

@@ -26,7 +26,7 @@ const ExerciseItem = ({
             <input
               type="number"
               className="rounded-lg border-gray-300 border p-4 focus:outline-none"
-              placeholder="Weight"
+              placeholder="무게(kg)"
               min={0}
               max={1000}
               onKeyDown ={handleKeyPress}
@@ -35,7 +35,7 @@ const ExerciseItem = ({
             <input
               type="number"
               className="rounded-lg border-gray-300 border p-4 focus:outline-none"
-              placeholder="Rep"
+              placeholder="반복횟수"
               min={0}
               max={100}
               onKeyDown ={handleKeyPress}
@@ -45,7 +45,7 @@ const ExerciseItem = ({
               className="bg-blue-500 text-white rounded-lg px-8 py-4 hover:bg-sky-500"
               onClick={() => handleAddSet(exerciseIndex)}
             >
-              Add Set
+              세트 추가
             </button>
           </div>
   
@@ -62,7 +62,7 @@ const ExerciseItem = ({
            <button
                     className="bg-red-500 hover:bg-red-400 text-white text-sm rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1"
                     onClick={() => handleRemoveExercise(exerciseIndex)}>
-                    Remove Exercise
+                    운동 삭제
                 </button>
         </Panel>
       </Collapse>

@@ -39,7 +39,7 @@ const App = () => {
         const repsInput = repsInputs.current[exerciseIndex];
 
         if (parseInt(weightInput.value) > 800 || parseInt(repsInput.value) > 300) {
-            alert('Please check if you entered it incorrectly!');
+            alert('잘못 입력된게 아닌지 확인해 주세요!');
         }
 
         if (weightInput.value !== '' && repsInput.value !== '') {
@@ -52,7 +52,7 @@ const App = () => {
             weightInput.value = '';
             repsInput.value = '';
         } else {
-            alert('Please enter the correct weight and reps.');
+            alert('무게와 반복횟수를 입력해 주세요.');
         }
     };
 
@@ -99,7 +99,7 @@ const App = () => {
                 }
 
                 <button
-                    className="bg-blue-500 text-white rounded-lg px-8 py-4 font-bold  hover:bg-sky-500">Complete</button>
+                    className="bg-blue-500 text-white rounded-lg px-8 py-4 font-bold  hover:bg-sky-500">기록 저장</button>
             </main>
             <CarouselComponent/>
            <Footer/>
