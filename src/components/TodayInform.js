@@ -15,7 +15,7 @@ const TodayInform = () => {
 
   useEffect(() => {
     let interval = null;
-    //소스트리 테스트
+    //소스트리 테스트 테스트2  sss
     if (isRunning) {
       interval = setInterval(() => {
         if (seconds < 59) {
@@ -32,6 +32,7 @@ const TodayInform = () => {
     } else {
       clearInterval(interval);
     }
+    //dddd
 
     return () => clearInterval(interval);
   }, [isRunning, seconds, minutes, hours]);
