@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import wDescEngToKor from '../wDescEngToKor';
+import wDescEngToKor from "../wDescEngToKor";
 
 const TodayInform = () => {
-  //console.log(process.env.REACT_APP_WEATHER_API_KEY) 
-  const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-  const WEATHER_API_URL = process.env.REACT_APP_WEATHER_API_URL
+  //console.log(process.env.REACT_APP_WEATHER_API_KEY)
+  const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+  const WEATHER_API_URL = process.env.REACT_APP_WEATHER_API_URL;
+  const [weather, setWeather] = useState([]);
+  const [temp, setTemp] = useState({});
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [weather, setWeather] = useState([]);
-  const [temp, setTemp] = useState({});
 
   useEffect(() => {
     let interval = null;
-
+    //소스트리 테스트
     if (isRunning) {
       interval = setInterval(() => {
         if (seconds < 59) {
@@ -51,41 +51,49 @@ const TodayInform = () => {
 
   useEffect(() => {
     async function getWeather() {
-        try {
-            const res = await axios.get(WEATHER_API_URL + WEATHER_API_KEY)
-            //console.log("res", res);
-            let weather = res.data.weather;
-            let temp = res.data.main;
-            setWeather(weather);
-            setTemp(temp);
-        } catch (error) {
-            console.log(error);
-        }
+      try {
+        const res = await axios.get(WEATHER_API_URL + WEATHER_API_KEY);
+        //console.log("res", res);
+        let weather = res.data.weather;
+        let temp = res.data.main;
+        setWeather(weather);
+        setTemp(temp);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    getWeather()
-}, [])
+    getWeather();
+  }, []);
 
-const isWeather = weather.map((e, index) => {
+  const isWeather = weather.map((e, index) => {
+    return (
+      <div key={index} className="flex justify-center align-middle">
+        <span className="text-center text-slate-400 sm:text-base md:text-2xl mx-3">
+          Seoul, {temp.temp}°C
+        </span>
+        <span className="text-center text-slate-400 sm:text-base md:text-2xl mx-3">
+          {wDescEngToKor(e.id)}
+        </span>
+        <img
+          className="object-cover h-12 w-12"
+          src={`https://openweathermap.org/img/wn/${e.icon}@2x.png`}
+          alt="날씨 아이콘"
+        />
+      </div>
+    );
+  });
+
   return (
-    <div key={index} className="flex justify-center align-middle">
-      <span className='text-center text-slate-400 sm:text-base md:text-2xl mx-3'>Seoul, {temp.temp}°C</span>
-      <span className='text-center text-slate-400 sm:text-base md:text-2xl mx-3'>{wDescEngToKor(e.id)}</span>
-      <img
-        className='object-cover h-12 w-12'
-        src={`https://openweathermap.org/img/wn/${e.icon}@2x.png`}
-        alt="날씨 아이콘"
-      />
-    </div>
-  );
-});
-
-
-return (
-  <div className="flex flex-col items-center justify-center mt-5 p-3">
-    {/* 타이머 */}
-    <div className="flex items-center justify-center text-slate-500 rounded-full text-2xl md:text-7xl sm:text-5xl mb-4">
-      <span className='mr-3'> {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
-      <button
+    <div className="flex flex-col items-center justify-center mt-5 p-3">
+      {/* 타이머 */}
+      <div className="flex items-center justify-center text-slate-500 rounded-full text-2xl md:text-7xl sm:text-5xl mb-4">
+        <span className="mr-3">
+          {" "}
+          {hours.toString().padStart(2, "0")}:
+          {minutes.toString().padStart(2, "0")}:
+          {seconds.toString().padStart(2, "0")}
+        </span>
+        <button
           className="bg-blue-500 text-white m-1 text-xs sm:text-sm md:text-m  rounded-lg px-2 md:px-8 py-2 md:py-4 text-center col-span-2 md:col-span-1 hover:bg-blue-700"
           onClick={handleStart}
           disabled={isRunning}
@@ -105,13 +113,11 @@ return (
         >
           초기화
         </button>
-    </div>
+      </div>
 
-    {/* 날씨 정보 */}
-    <div className="mt-1">
-      {isWeather}
+      {/* 날씨 정보 */}
+      <div className="mt-1">{isWeather}</div>
     </div>
-  </div>
   );
 };
 
